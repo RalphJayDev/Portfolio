@@ -161,74 +161,41 @@ html:not(.dark) button {
   }
 }
 
-/* Moon orbit animations - Responsive for all screen sizes */
-@keyframes moonOrbit {
+/* Enhanced elliptical CSS-based moon orbit for modern browsers */
+@keyframes moonOrbitElliptical {
   0% {
-    transform: rotate(0deg) translateY(-160px) rotate(0deg);
+    transform: translateY(-110px) scaleX(1.27) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-110px) scaleX(1.27) rotate(90deg);
+  }
+  50% {
+    transform: translateY(-110px) scaleX(1.27) rotate(180deg);
+  }
+  75% {
+    transform: translateY(-110px) scaleX(1.27) rotate(270deg);
   }
   100% {
-    transform: rotate(360deg) translateY(-160px) rotate(-360deg);
+    transform: translateY(-110px) scaleX(1.27) rotate(360deg);
   }
 }
 
-/* Tablet moon orbit */
-@media (max-width: 1024px) and (min-width: 769px) {
-  @keyframes moonOrbit {
-    0% {
-      transform: rotate(0deg) translateY(-140px) rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg) translateY(-140px) rotate(-360deg);
-    }
+/* Enhanced wider elliptical CSS-based moon orbit for desktop */
+@keyframes moonOrbitWide {
+  0% {
+    transform: translateY(-130px) scaleX(1.38) rotate(0deg);
   }
-}
-
-/* Mobile moon orbit - Smaller radius for mobile screens */
-@media (max-width: 768px) {
-  @keyframes moonOrbit {
-    0% {
-      transform: rotate(0deg) translateY(-120px) rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg) translateY(-120px) rotate(-360deg);
-    }
+  25% {
+    transform: translateY(-130px) scaleX(1.38) rotate(90deg);
   }
-
-  /* Adjust moon container for mobile */
-  .moon-orbit {
-    transform-origin: 100px 100px !important;
+  50% {
+    transform: translateY(-130px) scaleX(1.38) rotate(180deg);
   }
-}
-
-/* Small mobile screens */
-@media (max-width: 480px) {
-  @keyframes moonOrbit {
-    0% {
-      transform: rotate(0deg) translateY(-100px) rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg) translateY(-100px) rotate(-360deg);
-    }
+  75% {
+    transform: translateY(-130px) scaleX(1.38) rotate(270deg);
   }
-
-  .moon-orbit {
-    transform-origin: 80px 80px !important;
-  }
-}
-
-/* Very small screens */
-@media (max-width: 320px) {
-  @keyframes moonOrbit {
-    0% {
-      transform: rotate(0deg) translateY(-80px) rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg) translateY(-80px) rotate(-360deg);
-    }
-  }
-
-  .moon-orbit {
-    transform-origin: 60px 60px !important;
+  100% {
+    transform: translateY(-130px) scaleX(1.38) rotate(360deg);
   }
 }
 
@@ -277,41 +244,14 @@ html:not(.dark) button {
   animation: float 6s ease-in-out infinite;
 }
 
-/* Moon specific styles - Responsive */
-.moon-orbit {
+/* Moon specific styles for CSS animation fallback */
+.moon-orbit-css {
   position: absolute;
   width: 40px;
   height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: moonOrbit 15s linear infinite;
-  transform-origin: 132px 132px;
-}
-
-/* Mobile adjustments for moon orbit */
-@media (max-width: 768px) {
-  .moon-orbit {
-    width: 35px;
-    height: 35px;
-    transform-origin: 100px 100px;
-  }
-}
-
-@media (max-width: 480px) {
-  .moon-orbit {
-    width: 30px;
-    height: 30px;
-    transform-origin: 80px 80px;
-  }
-}
-
-@media (max-width: 320px) {
-  .moon-orbit {
-    width: 25px;
-    height: 25px;
-    transform-origin: 60px 60px;
-  }
 }
 
 .moon-glow {
@@ -320,25 +260,6 @@ html:not(.dark) button {
   justify-content: center;
   position: relative;
   animation: moonPulse 3s ease-in-out infinite;
-}
-
-/* Responsive moon size */
-@media (max-width: 768px) {
-  .moon-glow {
-    font-size: 18px;
-  }
-}
-
-@media (max-width: 480px) {
-  .moon-glow {
-    font-size: 16px;
-  }
-}
-
-@media (max-width: 320px) {
-  .moon-glow {
-    font-size: 14px;
-  }
 }
 
 .moon-glow::before {
@@ -350,21 +271,6 @@ html:not(.dark) button {
   border-radius: 50%;
   z-index: -1;
   animation: moonGlowPulse 3s ease-in-out infinite;
-}
-
-/* Responsive moon glow */
-@media (max-width: 768px) {
-  .moon-glow::before {
-    width: 25px;
-    height: 25px;
-  }
-}
-
-@media (max-width: 480px) {
-  .moon-glow::before {
-    width: 20px;
-    height: 20px;
-  }
 }
 
 @keyframes moonGlowPulse {
@@ -650,10 +556,6 @@ html[data-theme="light"] {
 /* Touch device optimizations */
 @media (hover: none) and (pointer: coarse) {
   /* This targets touch devices */
-  .moon-orbit {
-    animation-duration: 20s; /* Slower on touch devices */
-  }
-
   .avatar-container {
     animation-duration: 8s; /* Slower float animation */
   }

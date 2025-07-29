@@ -56,85 +56,190 @@ const About = () => {
       }, 3000)
     }
 
-    // Create glowing moon around the avatar
+    // Create glowing moon with wider elliptical JavaScript animation for all mobile devices
     const createMoon = () => {
       const moonContainer = document.createElement("div")
-      moonContainer.className = "absolute pointer-events-none moon-orbit"
+      moonContainer.className = "absolute pointer-events-none"
+      moonContainer.style.cssText = `
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    left: calc(50% - 20px);
+    top: calc(50% - 20px);
+    z-index: 10;
+  `
+
+      const moon = document.createElement("div")
+      moon.innerHTML = "🌕"
+
+      // Responsive moon styling with WIDER orbits (like the original)
+      const isMobile = window.innerWidth <= 768
+      const isSmallMobile = window.innerWidth <= 480
+      const isVerySmall = window.innerWidth <= 320
+
+      let fontSize, radiusX, radiusY
+      if (isVerySmall) {
+        fontSize = "14px"
+        radiusX = 120 // Much wider horizontal radius
+        radiusY = 80 // Vertical radius (creates nice ellipse)
+      } else if (isSmallMobile) {
+        fontSize = "16px"
+        radiusX = 140 // Wider orbit
+        radiusY = 95
+      } else if (isMobile) {
+        fontSize = "18px"
+        radiusX = 160 // Even wider for tablets
+        radiusY = 110
+      } else {
+        fontSize = "20px"
+        radiusX = 180 // Desktop - nice wide orbit like original
+        radiusY = 130
+      }
+
+      moon.style.cssText = `
+    font-size: ${fontSize};
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 16px rgba(255, 255, 255, 0.4));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: moonPulse 3s ease-in-out infinite;
+  `
+
+      moonContainer.appendChild(moon)
+      avatar.appendChild(moonContainer)
+
+      // JavaScript-based wider elliptical orbit animation - works on ALL devices
+      let angle = 0
+      const animateMoon = () => {
+        angle += 0.015 // Slightly slower for more graceful movement
+
+        // Create wider elliptical orbit (like the beautiful original)
+        const x = Math.cos(angle) * radiusX
+        const y = Math.sin(angle) * radiusY
+
+        // Add subtle rotation for natural movement
+        const rotation = angle * (180 / Math.PI) * 0.3 // Gentler rotation
+
+        moonContainer.style.transform = `translate(${x}px, ${y}px) rotate(${-rotation}deg)`
+
+        requestAnimationFrame(animateMoon)
+      }
+
+      // Start the animation
+      animateMoon()
+
+      return moonContainer
+    }
+
+    // Enhanced CSS-based wider elliptical moon for modern browsers
+    const createCSSMoon = () => {
+      const moonContainer = document.createElement("div")
+      moonContainer.className = "absolute pointer-events-none moon-orbit-css"
 
       const moon = document.createElement("div")
       moon.className = "moon-glow"
       moon.innerHTML = "🌕"
 
-      // Responsive moon styling
+      // Responsive moon styling with WIDER orbits to match original beauty
       const isMobile = window.innerWidth <= 768
       const isSmallMobile = window.innerWidth <= 480
       const isVerySmall = window.innerWidth <= 320
 
-      let fontSize, translateY, transformOrigin
+      let fontSize, translateY, transformOrigin, scaleX
       if (isVerySmall) {
         fontSize = "14px"
-        translateY = "-80px"
-        transformOrigin = "60px 60px"
+        translateY = "-80px" // Wider orbit
+        transformOrigin = "20px 100px"
+        scaleX = 1.5 // More elliptical
       } else if (isSmallMobile) {
         fontSize = "16px"
-        translateY = "-100px"
-        transformOrigin = "80px 80px"
+        translateY = "-95px" // Wider
+        transformOrigin = "20px 115px"
+        scaleX = 1.47
       } else if (isMobile) {
         fontSize = "18px"
-        translateY = "-120px"
-        transformOrigin = "100px 100px"
+        translateY = "-110px" // Wider
+        transformOrigin = "20px 130px"
+        scaleX = 1.45
       } else {
         fontSize = "20px"
-        translateY = "-160px"
-        transformOrigin = "132px 132px"
+        translateY = "-130px" // Nice wide orbit like original
+        transformOrigin = "20px 150px"
+        scaleX = 1.38 // Beautiful elliptical ratio
       }
 
       moon.style.cssText = `
-        font-size: ${fontSize};
-        filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 16px rgba(255, 255, 255, 0.4));
-        animation: moonPulse 3s ease-in-out infinite;
-      `
+    font-size: ${fontSize};
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 16px rgba(255, 255, 255, 0.4));
+    animation: moonPulse 3s ease-in-out infinite;
+  `
 
       moonContainer.appendChild(moon)
       moonContainer.style.cssText = `
-        animation: moonOrbit 15s linear infinite;
-        transform-origin: ${transformOrigin};
-        left: calc(50% - 10px);
-        top: calc(50% + ${translateY});
-      `
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: moonOrbitWide 18s linear infinite;
+    transform-origin: ${transformOrigin};
+    left: calc(50% - 20px);
+    top: calc(50% - 20px);
+    transform: translateY(${translateY}) scaleX(${scaleX});
+  `
 
       avatar.appendChild(moonContainer)
       return moonContainer
     }
 
+    // Detect if device supports CSS animations properly
+    const supportsCSS3D = () => {
+      const el = document.createElement("div")
+      const transforms = {
+        transform: "transform",
+        WebkitTransform: "-webkit-transform",
+        MozTransform: "-moz-transform",
+        msTransform: "-ms-transform",
+      }
+
+      for (const t in transforms) {
+        if (el.style[t] !== undefined) {
+          el.style[t] = "translate3d(1px,1px,1px)"
+          const has3d = el.style[t] !== undefined && el.style[t].length > 0 && el.style[t] !== "none"
+          return has3d
+        }
+      }
+      return false
+    }
+
     // Create sparkles periodically with responsive timing
-    const isMobile = window.innerWidth <= 768
-    const sparkleInterval = setInterval(createSparkle, isMobile ? 1000 : 800)
+    const sparkleInterval = setInterval(createSparkle, window.innerWidth <= 768 ? 1000 : 800)
 
     // Create initial sparkles
-    const initialSparkles = isMobile ? 4 : 6
+    const initialSparkles = window.innerWidth <= 768 ? 4 : 6
     for (let i = 0; i < initialSparkles; i++) {
       setTimeout(createSparkle, i * 200)
     }
 
-    // Create the moon
-    const moon = createMoon()
-
-    // Handle window resize to recreate moon with correct dimensions
-    const handleResize = () => {
-      if (moon && moon.parentNode) {
-        moon.parentNode.removeChild(moon)
+    // Create the moon - use JS animation for ALL mobile devices for better compatibility
+    let moon
+    const isMobile = window.innerWidth <= 768
+    if (isMobile) {
+      // Use JavaScript animation for ALL mobile devices (including Huawei Y6P)
+      moon = createMoon()
+    } else {
+      // Use CSS animation only for desktop
+      if (supportsCSS3D()) {
+        moon = createCSSMoon()
+      } else {
+        moon = createMoon()
       }
-      setTimeout(() => {
-        createMoon()
-      }, 100)
     }
-
-    window.addEventListener("resize", handleResize)
 
     return () => {
       clearInterval(sparkleInterval)
-      window.removeEventListener("resize", handleResize)
       // Clean up moon
       if (moon && moon.parentNode) {
         moon.parentNode.removeChild(moon)
