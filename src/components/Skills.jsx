@@ -1,4 +1,3 @@
-"use client"
 
 import { useState } from "react"
 
@@ -68,7 +67,7 @@ const Skills = () => {
       hoverColor: "hover:bg-indigo-600",
       icon: (
         <svg viewBox="0 0 24 24" className="w-8 h-8" fill="currentColor">
-          <path d="M21.469 6.825c.84 1.537 1.318 3.3 1.318 5.175 0 3.979-2.156 7.456-5.363 9.325l3.295-9.527c.615-1.54.82-2.771.82-3.864 0-.405-.026-.78-.07-1.11m-7.981.105c.647-.03 1.232-.105 1.232-.105.582-.075.514-.93-.067-.899 0 0-1.755.135-2.88.135-1.064 0-2.85-.15-2.85-.15-.585-.03-.661.855-.075.885 0 0 .54.061 1.125.09l1.68 4.605-2.37 7.08L5.354 6.9c.649-.03 1.234-.1 1.234-.1.585-.075.516-.93-.065-.896 0 0-1.746.138-2.874.138-.2 0-.438-.008-.69-.015C4.911 3.15 8.235 1.215 12 1.215c2.809 0 5.365 1.072 7.286 2.833-.046-.003-.091-.009-.141-.009-.963 0-1.641.84-1.641 1.74 0 .81.467 1.504.963 2.31.375.645.81 1.474.81 2.67 0 .828-.315 1.783-.72 3.109l-.943 3.154-3.435-10.23zm-2.7 20.615c-1.31.75-2.750 1.17-4.289 1.17C4.775 24.025 2.366 23.13.542 21.57l3.932-11.395c.001-.028.014-.052.016-.08l4.347 11.905c.131.29.275.543.426.77M12 22.79c-1.224 0-2.359-.23-3.414-.65l3.6-10.44 3.733 10.238c.024.06.057.117.095.172-.65.434-1.39.68-2.014.68" />
+          <path d="M21.469 6.825c.84 1.537 1.318 3.3 1.318 5.175 0 3.979-2.156 7.456-5.363 9.325l3.295-9.527c.615-1.54.82-2.771.82-3.864 0-.405-.026-.78-.07-1.11m-7.981.105c.647-.03 1.232-.105 1.232-.105.582-.075.514-.93-.067-.899 0 0-1.755.135-2.88.135-1.064 0-2.85-.15-2.85-.15-.585-.03-.661.855-.075.885 0 0 .54.061 1.125.09l1.68 4.605-2.37 7.08L5.354 6.9c.649-.03 1.234-.1 1.234-.1.585-.075.516-.93-.065-.896 0 0-1.746.138-2.874.138-.2 0-.438-.008-.69-.015C4.911 3.15 8.235 1.215 12 1.215c2.809 0 5.365 1.072 7.286 2.833-.046-.003-.091-.009-.141-.009-.963 0-1.641.84-1.641 1.74 0 .81.467 1.504.963 2.310.375.645.81 1.474.81 2.67 0 .828-.315 1.783-.72 3.109l-.943 3.154-3.435-10.23zm-2.7 20.615c-1.31.75-2.750 1.17-4.289 1.17C4.775 24.025 2.366 23.13.542 21.57l3.932-11.395c.001-.028.014-.052.016-.08l4.347 11.905c.131.29.275.543.426.77M12 22.79c-1.224 0-2.359-.23-3.414-.65l3.6-10.44 3.733 10.238c.024.06.057.117.095.172-.65.434-1.39.68-2.014.68" />
         </svg>
       ),
     },
@@ -86,7 +85,7 @@ const Skills = () => {
   ]
 
   return (
-    <section className="py-12 sm:py-16 lg:py-20 px-4 bg-gray-50/50 dark:bg-gray-800/20 backdrop-blur-sm">
+    <section className="py-12 sm:py-16 lg:py-20 px-4 bg-transparent">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-center text-gray-900 dark:text-white mb-8 sm:mb-12">
           My Skills
@@ -96,84 +95,37 @@ const Skills = () => {
           {skills.map((skill, index) => (
             <div
               key={skill.name}
-              className={`
-                group space-y-3 sm:space-y-4 p-4 sm:p-6 
-                bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl 
-                shadow-sm hover:shadow-lg 
-                transition-all duration-300 
-                transform hover:-translate-y-2
-                ${activeSkill === skill.name ? "-translate-y-2 shadow-lg" : "translate-y-0"}
-                cursor-pointer
-              `}
+              className="group space-y-3 sm:space-y-4 p-4 sm:p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
               onMouseEnter={() => setActiveSkill(skill.name)}
               onMouseLeave={() => setActiveSkill(null)}
-              onTouchStart={() => setActiveSkill(skill.name)}
-              onTouchEnd={() => setTimeout(() => setActiveSkill(null), 2000)}
             >
-              {/* Header Section - Icon + Name + Percentage */}
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-3 sm:gap-4">
-                  {/* Animated Icon Container - Moves with the whole card */}
+                  {/* Animated Icon Container */}
                   <div
                     className={`
                       flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-lg
                       ${skill.color} ${skill.hoverColor}
-                      text-white transition-all duration-300
-                      ${activeSkill === skill.name ? "scale-110 rotate-6 shadow-lg" : "scale-100 rotate-0"}
+                      text-white transition-all duration-300 transform
+                      ${activeSkill === skill.name ? "scale-110 rotate-6" : "scale-100 rotate-0"}
+                      group-hover:shadow-lg
                     `}
                   >
-                    <div
-                      className={`
-                        transition-transform duration-300
-                        ${activeSkill === skill.name ? "scale-110" : "scale-100"}
-                      `}
-                    >
-                      {skill.icon}
-                    </div>
+                    <div className="transition-transform duration-300 group-hover:scale-110">{skill.icon}</div>
                   </div>
 
-                  {/* Skill Name and Level - Moves with the card */}
-                  <div className="flex-1">
-                    <span
-                      className={`
-                        text-lg sm:text-xl font-semibold 
-                        text-gray-800 dark:text-gray-200 
-                        transition-all duration-300
-                        ${activeSkill === skill.name ? "text-blue-600 dark:text-blue-400" : ""}
-                      `}
-                    >
+                  <div>
+                    <span className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-200 transition-colors duration-300">
                       {skill.name}
                     </span>
-                    <div
-                      className={`
-                        text-sm mt-1 transition-colors duration-300
-                        ${
-                          activeSkill === skill.name
-                            ? "text-blue-500 dark:text-blue-300"
-                            : "text-gray-500 dark:text-gray-400"
-                        }
-                      `}
-                    >
+                    <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">
                       {skill.level >= 80 ? "Expert" : skill.level >= 70 ? "Advanced" : "Intermediate"}
                     </div>
                   </div>
                 </div>
 
-                {/* Percentage - Moves with the card */}
                 <div className="text-right">
-                  <span
-                    className={`
-                      text-lg sm:text-xl font-bold 
-                      transition-colors duration-300
-                      ${
-                        activeSkill === skill.name
-                          ? "text-blue-600 dark:text-blue-400"
-                          : "text-gray-700 dark:text-gray-300"
-                      }
-                    `}
-                  >
-                    {skill.level}%
-                  </span>
+                  <span className="text-lg sm:text-xl font-bold text-gray-700 dark:text-gray-300">{skill.level}%</span>
                 </div>
               </div>
 
@@ -183,7 +135,7 @@ const Skills = () => {
                   className={`
                     h-full rounded-full transition-all duration-1000 ease-out relative overflow-hidden
                     ${skill.color}
-                    ${activeSkill === skill.name ? "animate-pulse shadow-lg" : ""}
+                    ${activeSkill === skill.name ? "animate-pulse" : ""}
                   `}
                   style={{
                     width: `${skill.level}%`,
@@ -195,17 +147,8 @@ const Skills = () => {
                 </div>
               </div>
 
-              {/* Skill Description - Appears on hover/touch */}
-              <div
-                className={`
-                  text-sm transition-all duration-300 overflow-hidden
-                  ${
-                    activeSkill === skill.name
-                      ? "opacity-100 max-h-20 text-blue-600 dark:text-blue-400"
-                      : "opacity-0 max-h-0 text-gray-600 dark:text-gray-400"
-                  }
-                `}
-              >
+              {/* Skill Description */}
+              <div className="text-sm text-gray-600 dark:text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 {skill.name === "HTML" && "Semantic markup and modern HTML5 features"}
                 {skill.name === "CSS" && "Responsive design, animations, and modern CSS"}
                 {skill.name === "JavaScript" && "ES6+, DOM manipulation, and async programming"}
@@ -220,7 +163,7 @@ const Skills = () => {
 
         {/* Skills Summary */}
         <div className="mt-12 sm:mt-16 text-center">
-          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-6 sm:p-8 shadow-lg">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 sm:p-8 shadow-lg">
             <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4">
               Continuous Learning Journey
             </h3>
@@ -237,7 +180,7 @@ const Skills = () => {
                 <div className="text-sm text-gray-600 dark:text-gray-400">Technologies</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl sm:text-3xl font-bold text-green-600 dark:text-green-400">2+</div>
+                <div className="text-2xl sm:text-3xl font-bold text-green-600 dark:text-green-400">1+</div>
                 <div className="text-sm text-gray-600 dark:text-gray-400">Years Experience</div>
               </div>
               <div className="text-center">
