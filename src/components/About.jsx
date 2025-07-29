@@ -1,3 +1,5 @@
+"use client"
+
 import { useEffect, useRef } from "react"
 
 const About = () => {
@@ -104,6 +106,11 @@ const About = () => {
                       src="/src/Avatar/rjay.jpg"
                       className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
                       alt="Ralph Jay Guevarra - Web Developer"
+                      onError={(e) => {
+                        // Fallback to a default avatar if image fails to load
+                        e.target.src =
+                          "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256' viewBox='0 0 256 256'%3E%3Ccircle cx='128' cy='128' r='128' fill='%236366f1'/%3E%3Ctext x='50%25' y='50%25' dominantBaseline='middle' textAnchor='middle' fontFamily='Arial, sans-serif' fontSize='80' fill='white'%3ERJ%3C/text%3E%3C/svg%3E"
+                      }}
                     />
                   </div>
                 </div>

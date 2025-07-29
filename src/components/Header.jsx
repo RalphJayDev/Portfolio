@@ -1,3 +1,5 @@
+"use client"
+
 import { useState } from "react"
 import { Moon, Sun, Menu, X, Download } from "lucide-react"
 
@@ -22,11 +24,36 @@ const Header = ({ darkMode, toggleDarkMode }) => {
   }
 
   const downloadResume = () => {
-    // Create a dummy resume download - replace with your actual resume file
+    // Create a simple PDF-like resume download
+    const resumeContent = `
+      Ralph Jay Guevarra - Web Developer Resume
+      
+      Contact Information:
+      Email: your.email@example.com
+      Phone: +1 (555) 123-4567
+      Location: Your City, Country
+      
+      Skills:
+      - HTML/CSS
+      - JavaScript
+      - React
+      - Tailwind CSS
+      - WordPress
+      - Figma
+      
+      Experience:
+      Web Developer - Passionate about creating beautiful digital experiences
+      
+      This is a placeholder resume. Please replace with your actual resume file.
+    `
+
+    const blob = new Blob([resumeContent], { type: "text/plain" })
+    const url = URL.createObjectURL(blob)
     const link = document.createElement("a")
-    link.href = "/placeholder.svg?height=800&width=600&text=Resume" // Replace with actual resume path
-    link.download = "RjayDev_Resume.pdf"
+    link.href = url
+    link.download = "RjayDev_Resume.txt"
     link.click()
+    URL.revokeObjectURL(url)
   }
 
   return (

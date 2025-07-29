@@ -9,7 +9,7 @@ const Blog = () => {
       date: "Coming Soon",
       readTime: "5 min read",
       category: "React",
-      image: "/placeholder.svg?height=200&width=300&text=React+Hooks",
+      image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=300&h=200&fit=crop&auto=format",
       isPlaceholder: true,
     },
     {
@@ -18,7 +18,7 @@ const Blog = () => {
       date: "Coming Soon",
       readTime: "7 min read",
       category: "CSS",
-      image: "/placeholder.svg?height=200&width=300&text=Tailwind+CSS",
+      image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=300&h=200&fit=crop&auto=format",
       isPlaceholder: true,
     },
     {
@@ -27,7 +27,7 @@ const Blog = () => {
       date: "Coming Soon",
       readTime: "6 min read",
       category: "JavaScript",
-      image: "/placeholder.svg?height=200&width=300&text=JavaScript+ES6",
+      image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=300&h=200&fit=crop&auto=format",
       isPlaceholder: true,
     },
   ]
@@ -58,7 +58,15 @@ const Blog = () => {
               className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden opacity-60"
             >
               <div className="relative">
-                <img src={post.image || "/placeholder.svg"} alt={post.title} className="w-full h-48 object-cover" />
+                <img
+                  src={post.image || "/placeholder.svg"}
+                  alt={post.title}
+                  className="w-full h-48 object-cover"
+                  onError={(e) => {
+                    e.target.src =
+                      "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200' viewBox='0 0 300 200'%3E%3Crect width='300' height='200' fill='%23f3f4f6'/%3E%3Ctext x='50%25' y='50%25' dominantBaseline='middle' textAnchor='middle' fontFamily='Arial, sans-serif' fontSize='14' fill='%236b7280'%3EBlog Image%3C/text%3E%3C/svg%3E"
+                  }}
+                />
                 <div className="absolute top-4 left-4">
                   <span className="px-3 py-1 bg-blue-600 text-white text-sm rounded-full">{post.category}</span>
                 </div>

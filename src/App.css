@@ -1,3 +1,4 @@
+/* Aggressive theme override for all modern browsers */
 html {
   scroll-behavior: smooth;
 }
@@ -17,20 +18,26 @@ html[data-theme="light"] * {
   color-scheme: light !important;
 }
 
-/* Microsoft Edge specific overrides */
-@supports (-ms-ime-align: auto) {
+/* Modern Forced Colors Mode support (replaces deprecated -ms-high-contrast) */
+@media (forced-colors: active) {
   html.dark {
-    color-scheme: dark !important;
-    background-color: #1f2937 !important;
+    background-color: Canvas !important;
+    color: CanvasText !important;
   }
 
   html:not(.dark) {
-    color-scheme: light !important;
-    background-color: #ffffff !important;
+    background-color: Canvas !important;
+    color: CanvasText !important;
+  }
+
+  /* Ensure buttons and interactive elements work in forced colors */
+  button,
+  a {
+    border: 1px solid ButtonText !important;
   }
 }
 
-/* Webkit/Chromium Edge overrides */
+/* Webkit/Chromium overrides */
 @supports (-webkit-appearance: none) {
   html.dark {
     color-scheme: dark !important;
@@ -420,19 +427,6 @@ html[data-theme="dark"] .card-hover:hover {
   visibility: visible;
 }
 
-/* Microsoft Edge specific fixes */
-@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
-  html.dark {
-    background-color: #1f2937 !important;
-    color: white !important;
-  }
-
-  html:not(.dark) {
-    background-color: white !important;
-    color: black !important;
-  }
-}
-
 /* Force theme override for all browsers */
 html.dark,
 html[data-theme="dark"] {
@@ -444,4 +438,33 @@ html:not(.dark),
 html[data-theme="light"] {
   background-color: white !important;
   color: black !important;
+}
+
+/* Accessibility: Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode support for better accessibility */
+@media (prefers-contrast: high) {
+  html.dark {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+  }
+
+  html:not(.dark) {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  button,
+  a {
+    border: 2px solid currentColor !important;
+  }
 }

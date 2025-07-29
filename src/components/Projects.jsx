@@ -7,7 +7,7 @@ const Projects = () => {
       title: "Coming Soon",
       description:
         "Exciting projects are in development. Stay tuned for amazing web applications and creative solutions!",
-      image: "/placeholder.svg?height=200&width=300",
+      image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=300&h=200&fit=crop&auto=format",
       tech: ["React", "Tailwind CSS", "JavaScript"],
       github: "#",
       live: "#",
@@ -17,7 +17,7 @@ const Projects = () => {
       title: "Future Project",
       description:
         "This space will showcase innovative web development projects that demonstrate modern design and functionality.",
-      image: "/placeholder.svg?height=200&width=300",
+      image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=300&h=200&fit=crop&auto=format",
       tech: ["HTML", "CSS", "WordPress"],
       github: "#",
       live: "#",
@@ -26,7 +26,7 @@ const Projects = () => {
     {
       title: "Upcoming Work",
       description: "Creative digital experiences and user-friendly interfaces will be featured here soon.",
-      image: "/placeholder.svg?height=200&width=300",
+      image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=300&h=200&fit=crop&auto=format",
       tech: ["Figma", "React", "Tailwind"],
       github: "#",
       live: "#",
@@ -50,6 +50,10 @@ const Projects = () => {
                   src={project.image || "/placeholder.svg"}
                   alt={project.title}
                   className="w-full h-48 object-cover"
+                  onError={(e) => {
+                    e.target.src =
+                      "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200' viewBox='0 0 300 200'%3E%3Crect width='300' height='200' fill='%23f3f4f6'/%3E%3Ctext x='50%25' y='50%25' dominantBaseline='middle' textAnchor='middle' fontFamily='Arial, sans-serif' fontSize='14' fill='%236b7280'%3EProject Image%3C/text%3E%3C/svg%3E"
+                  }}
                 />
                 {project.isPlaceholder && (
                   <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
