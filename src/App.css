@@ -161,13 +161,74 @@ html:not(.dark) button {
   }
 }
 
-/* Moon orbit and glow animations */
+/* Moon orbit animations - Responsive for all screen sizes */
 @keyframes moonOrbit {
   0% {
     transform: rotate(0deg) translateY(-160px) rotate(0deg);
   }
   100% {
     transform: rotate(360deg) translateY(-160px) rotate(-360deg);
+  }
+}
+
+/* Tablet moon orbit */
+@media (max-width: 1024px) and (min-width: 769px) {
+  @keyframes moonOrbit {
+    0% {
+      transform: rotate(0deg) translateY(-140px) rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg) translateY(-140px) rotate(-360deg);
+    }
+  }
+}
+
+/* Mobile moon orbit - Smaller radius for mobile screens */
+@media (max-width: 768px) {
+  @keyframes moonOrbit {
+    0% {
+      transform: rotate(0deg) translateY(-120px) rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg) translateY(-120px) rotate(-360deg);
+    }
+  }
+
+  /* Adjust moon container for mobile */
+  .moon-orbit {
+    transform-origin: 100px 100px !important;
+  }
+}
+
+/* Small mobile screens */
+@media (max-width: 480px) {
+  @keyframes moonOrbit {
+    0% {
+      transform: rotate(0deg) translateY(-100px) rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg) translateY(-100px) rotate(-360deg);
+    }
+  }
+
+  .moon-orbit {
+    transform-origin: 80px 80px !important;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 320px) {
+  @keyframes moonOrbit {
+    0% {
+      transform: rotate(0deg) translateY(-80px) rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg) translateY(-80px) rotate(-360deg);
+    }
+  }
+
+  .moon-orbit {
+    transform-origin: 60px 60px !important;
   }
 }
 
@@ -216,7 +277,7 @@ html:not(.dark) button {
   animation: float 6s ease-in-out infinite;
 }
 
-/* Moon specific styles */
+/* Moon specific styles - Responsive */
 .moon-orbit {
   position: absolute;
   width: 40px;
@@ -224,6 +285,33 @@ html:not(.dark) button {
   display: flex;
   align-items: center;
   justify-content: center;
+  animation: moonOrbit 15s linear infinite;
+  transform-origin: 132px 132px;
+}
+
+/* Mobile adjustments for moon orbit */
+@media (max-width: 768px) {
+  .moon-orbit {
+    width: 35px;
+    height: 35px;
+    transform-origin: 100px 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .moon-orbit {
+    width: 30px;
+    height: 30px;
+    transform-origin: 80px 80px;
+  }
+}
+
+@media (max-width: 320px) {
+  .moon-orbit {
+    width: 25px;
+    height: 25px;
+    transform-origin: 60px 60px;
+  }
 }
 
 .moon-glow {
@@ -231,6 +319,26 @@ html:not(.dark) button {
   align-items: center;
   justify-content: center;
   position: relative;
+  animation: moonPulse 3s ease-in-out infinite;
+}
+
+/* Responsive moon size */
+@media (max-width: 768px) {
+  .moon-glow {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .moon-glow {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 320px) {
+  .moon-glow {
+    font-size: 14px;
+  }
 }
 
 .moon-glow::before {
@@ -242,6 +350,21 @@ html:not(.dark) button {
   border-radius: 50%;
   z-index: -1;
   animation: moonGlowPulse 3s ease-in-out infinite;
+}
+
+/* Responsive moon glow */
+@media (max-width: 768px) {
+  .moon-glow::before {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+@media (max-width: 480px) {
+  .moon-glow::before {
+    width: 20px;
+    height: 20px;
+  }
 }
 
 @keyframes moonGlowPulse {
@@ -256,10 +379,32 @@ html:not(.dark) button {
   }
 }
 
-/* Avatar container effects */
+/* Avatar container effects - Responsive */
 .avatar-container {
   position: relative;
   animation: float 6s ease-in-out infinite;
+}
+
+/* Mobile avatar size adjustments */
+@media (max-width: 768px) {
+  .avatar-container {
+    width: 200px !important;
+    height: 200px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .avatar-container {
+    width: 180px !important;
+    height: 180px !important;
+  }
+}
+
+@media (max-width: 320px) {
+  .avatar-container {
+    width: 160px !important;
+    height: 160px !important;
+  }
 }
 
 .avatar-container::before {
@@ -278,6 +423,19 @@ html:not(.dark) button {
   animation: spin-slow 15s linear infinite;
   z-index: -1;
   opacity: 0.7;
+}
+
+/* Mobile avatar ring adjustments */
+@media (max-width: 768px) {
+  .avatar-container::before {
+    inset: -10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .avatar-container::before {
+    inset: -8px;
+  }
 }
 
 /* Custom scrollbar - Responsive with forced theme override */
@@ -406,18 +564,6 @@ html[data-theme="dark"] .card-hover:hover {
   }
 }
 
-/* Mobile responsive moon orbit */
-@media (max-width: 768px) {
-  @keyframes moonOrbit {
-    0% {
-      transform: rotate(0deg) translateY(-130px) rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg) translateY(-130px) rotate(-360deg);
-    }
-  }
-}
-
 /* Prevent flash of unstyled content */
 .theme-loading {
   visibility: hidden;
@@ -466,5 +612,49 @@ html[data-theme="light"] {
   button,
   a {
     border: 2px solid currentColor !important;
+  }
+}
+
+/* Mobile-specific animation optimizations */
+@media (max-width: 768px) {
+  /* Reduce animation complexity on mobile for better performance */
+  .animate-spin-slow {
+    animation-duration: 12s;
+  }
+
+  .animate-spin-reverse {
+    animation-duration: 16s;
+  }
+
+  /* Ensure sparkles work on mobile */
+  @keyframes sparkleFloat {
+    0% {
+      opacity: 0;
+      transform: translateY(0px) scale(0) rotate(0deg);
+    }
+    25% {
+      opacity: 1;
+      transform: translateY(-8px) scale(0.8) rotate(90deg);
+    }
+    75% {
+      opacity: 1;
+      transform: translateY(-20px) scale(0.8) rotate(270deg);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-35px) scale(0) rotate(360deg);
+    }
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  /* This targets touch devices */
+  .moon-orbit {
+    animation-duration: 20s; /* Slower on touch devices */
+  }
+
+  .avatar-container {
+    animation-duration: 8s; /* Slower float animation */
   }
 }

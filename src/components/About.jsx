@@ -21,9 +21,24 @@ const About = () => {
         animation: sparkleFloat 3s ease-in-out infinite;
       `
 
+      // Responsive sparkle positioning based on screen size
+      const isMobile = window.innerWidth <= 768
+      const isSmallMobile = window.innerWidth <= 480
+
+      let distance, baseDistance
+      if (isSmallMobile) {
+        baseDistance = 90
+        distance = baseDistance + Math.random() * 30
+      } else if (isMobile) {
+        baseDistance = 100
+        distance = baseDistance + Math.random() * 35
+      } else {
+        baseDistance = 140
+        distance = baseDistance + Math.random() * 40
+      }
+
       // Random position around the avatar
       const angle = Math.random() * Math.PI * 2
-      const distance = 140 + Math.random() * 40
       const x = Math.cos(angle) * distance
       const y = Math.sin(angle) * distance
 
@@ -49,8 +64,33 @@ const About = () => {
       const moon = document.createElement("div")
       moon.className = "moon-glow"
       moon.innerHTML = "🌕"
+
+      // Responsive moon styling
+      const isMobile = window.innerWidth <= 768
+      const isSmallMobile = window.innerWidth <= 480
+      const isVerySmall = window.innerWidth <= 320
+
+      let fontSize, translateY, transformOrigin
+      if (isVerySmall) {
+        fontSize = "14px"
+        translateY = "-80px"
+        transformOrigin = "60px 60px"
+      } else if (isSmallMobile) {
+        fontSize = "16px"
+        translateY = "-100px"
+        transformOrigin = "80px 80px"
+      } else if (isMobile) {
+        fontSize = "18px"
+        translateY = "-120px"
+        transformOrigin = "100px 100px"
+      } else {
+        fontSize = "20px"
+        translateY = "-160px"
+        transformOrigin = "132px 132px"
+      }
+
       moon.style.cssText = `
-        font-size: 20px;
+        font-size: ${fontSize};
         filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 16px rgba(255, 255, 255, 0.4));
         animation: moonPulse 3s ease-in-out infinite;
       `
@@ -58,28 +98,43 @@ const About = () => {
       moonContainer.appendChild(moon)
       moonContainer.style.cssText = `
         animation: moonOrbit 15s linear infinite;
-        transform-origin: 132px 132px;
+        transform-origin: ${transformOrigin};
         left: calc(50% - 10px);
-        top: calc(50% - 160px);
+        top: calc(50% + ${translateY});
       `
 
       avatar.appendChild(moonContainer)
       return moonContainer
     }
 
-    // Create sparkles periodically
-    const sparkleInterval = setInterval(createSparkle, 800)
+    // Create sparkles periodically with responsive timing
+    const isMobile = window.innerWidth <= 768
+    const sparkleInterval = setInterval(createSparkle, isMobile ? 1000 : 800)
 
     // Create initial sparkles
-    for (let i = 0; i < 6; i++) {
+    const initialSparkles = isMobile ? 4 : 6
+    for (let i = 0; i < initialSparkles; i++) {
       setTimeout(createSparkle, i * 200)
     }
 
     // Create the moon
     const moon = createMoon()
 
+    // Handle window resize to recreate moon with correct dimensions
+    const handleResize = () => {
+      if (moon && moon.parentNode) {
+        moon.parentNode.removeChild(moon)
+      }
+      setTimeout(() => {
+        createMoon()
+      }, 100)
+    }
+
+    window.addEventListener("resize", handleResize)
+
     return () => {
       clearInterval(sparkleInterval)
+      window.removeEventListener("resize", handleResize)
       // Clean up moon
       if (moon && moon.parentNode) {
         moon.parentNode.removeChild(moon)
@@ -94,8 +149,8 @@ const About = () => {
 
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="relative" ref={avatarRef}>
-            {/* Main Avatar Container */}
-            <div className="w-64 h-64 mx-auto relative avatar-container">
+            {/* Main Avatar Container - Responsive sizing */}
+            <div className="w-64 h-64 md:w-64 md:h-64 sm:w-48 sm:h-48 xs:w-40 xs:h-40 mx-auto relative avatar-container">
               {/* Outer gradient ring */}
               <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full p-2">
                 {/* Inner container */}
