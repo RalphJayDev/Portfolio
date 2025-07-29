@@ -103,7 +103,7 @@ const About = () => {
                   {/* Avatar image container */}
                   <div className="w-full h-full rounded-full overflow-hidden relative">
                     <img
-                      src="/src/Avatar/rjay.jpg"
+                      src="/Avatar/rjay.jpg"
                       className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
                       alt="Ralph Jay Guevarra - Web Developer"
                       onError={(e) => {
